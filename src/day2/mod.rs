@@ -9,7 +9,7 @@ fn get_input() -> Vec<String> {
         .collect()
 }
 
-fn part_a() {
+fn part_a() -> u32 {
     let input = get_input();
 
     let mut horizontal_pos = 0u32;
@@ -32,9 +32,11 @@ fn part_a() {
         depth,
         horizontal_pos * depth
     );
+
+    horizontal_pos * depth
 }
 
-fn part_b() {
+fn part_b() -> u32 {
     let input = get_input();
 
     let mut horizontal_pos = 0u32;
@@ -43,8 +45,6 @@ fn part_b() {
 
     for i in input {
         let (command, value) = parse_instruction(&i);
-
-        println!("{} {}", command, value);
 
         match command {
             "down" => {
@@ -67,6 +67,8 @@ fn part_b() {
         depth,
         horizontal_pos * depth
     );
+
+    horizontal_pos * depth
 }
 
 fn parse_instruction(instruction: &str) -> (&str, u32) {
@@ -86,7 +88,7 @@ mod test {
 
     #[test]
     fn test_input() {
-        super::part_a();
-        super::part_b();
+        assert!(super::part_a() == 1840243);
+        assert!(super::part_b() == 1727785422);
     }
 }
