@@ -25,7 +25,6 @@ fn part_a() -> i32 {
     for row in input {
         for (index, &value) in row.iter().enumerate() {
             if value > 0 {
-                println!("{}", ones_in_each_column[index]);
                 ones_in_each_column[index] += 1;
             }
         }
@@ -39,16 +38,16 @@ fn part_a() -> i32 {
         mode_in_columns.push(if tot > half { 1 } else { 0 });
     }
 
-    let gamma_rate_base_2 = mode_in_columns
-        .iter()
-        .map(|v| v.to_string())
-        .collect::<Vec<String>>()
-        .join("");
+    let gamma_rate_base_2: i16 = mode_in_columns
+        .into_iter()
+        .fold(0, |acc, digit| {
+            (acc << 1) + digit as i16
+        });
 
-    let gamma_rate = i32::from_str_radix(&gamma_rate_base_2, 2).unwrap();
-    let epsilon_rate = !gamma_rate & (1i32 << gamma_rate_base_2.len()).wrapping_sub(1);
+    let gamma_rate = gamma_rate_base_2;
+    let epsilon_rate = !gamma_rate & (1i16 << 12i16).wrapping_sub(1);
 
-    gamma_rate * epsilon_rate
+    gamma_rate as i32 * epsilon_rate as i32
 }
 
 #[cfg(test)]
